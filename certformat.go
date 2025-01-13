@@ -70,7 +70,7 @@ func newCertificateShort(cert *x509.Certificate) *certificateShort {
 // String returns the certificateShort formated as a string.
 func (c *certificateShort) String() string {
 	var buf formatBuffer
-	buf.Writef("X.509v3 %s Certificate (%s) [Serial: %s]\n", c.Type, c.PublicKeyAlgorithm, c.SerialNumber)
+	buf.Writef("X.509v3 %s Certificate (%s) [Serial: %s]\n\n", c.Type, c.PublicKeyAlgorithm, c.SerialNumber)
 	sans := c.SANs
 	if c.Subject != "" {
 		sans = append([]string{c.Subject}, sans...)
@@ -80,22 +80,22 @@ func (c *certificateShort) String() string {
 	} else {
 		for i, s := range sans {
 			if i == 0 {
-				buf.Writef("  Subject:     %s\n", s)
+				buf.Writef("  Subject:     %s\n\n", s)
 			} else {
-				buf.Writef("               %s\n", s)
+				buf.Writef("               %s\n\n", s)
 			}
 		}
 	}
 	buf.Writef("  Issuer:      %s\n", c.Issuer)
 	if c.Provisioner != nil {
 		if c.Provisioner.ID == "" {
-			buf.Writef("  Provisioner: %s\n", c.Provisioner.Name)
+			buf.Writef("  Provisioner: %s\n\n", c.Provisioner.Name)
 		} else {
-			buf.Writef("  Provisioner: %s [ID: %s]\n", c.Provisioner.Name, c.Provisioner.ID)
+			buf.Writef("  Provisioner: %s [ID: %s]\n\n", c.Provisioner.Name, c.Provisioner.ID)
 		}
 	}
-	buf.Writef("  Valid from:  %s\n", c.NotBefore.Format(time.RFC3339))
-	buf.Writef("          to:  %s\n", c.NotAfter.Format(time.RFC3339))
+	buf.Writef("  Valid from:  %s\n\n", c.NotBefore.Format(time.RFC3339))
+	buf.Writef("          to:  %s\n\n", c.NotAfter.Format(time.RFC3339))
 	return buf.String()
 }
 
@@ -116,7 +116,7 @@ func newCertificateRequestShort(cr *x509.CertificateRequest) *certificateRequest
 // String returns the certificateShort formated as a string.
 func (c *certificateRequestShort) String() string {
 	var buf formatBuffer
-	buf.Writef("X.509v3 Certificate Signing Request (%s)\n", c.PublicKeyAlgorithm)
+	buf.Writef("X.509v3 Certificate Signing Request (%s)\n\n", c.PublicKeyAlgorithm)
 	sans := c.SANs
 	if c.Subject != "" {
 		sans = append([]string{c.Subject}, sans...)
@@ -126,9 +126,9 @@ func (c *certificateRequestShort) String() string {
 	} else {
 		for i, s := range sans {
 			if i == 0 {
-				buf.Writef("  Subject:     %s\n", s)
+				buf.Writef("  Subject:     %s\n\n", s)
 			} else {
-				buf.Writef("               %s\n", s)
+				buf.Writef("               %s\n\n", s)
 			}
 		}
 	}
