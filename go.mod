@@ -1,4 +1,4 @@
-module github.com/smallstep/certinfo
+module github.com/gerbil/certinfo
 
 go 1.22.7
 
